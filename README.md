@@ -30,7 +30,35 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 
 
 ## PROGRAM
+```
+def vigenere_cipher(text, key, decrypt=False):
+    result = ""
+    key_len = len(key)
 
+    for i in range(len(text)):
+        shift = ord(key[i % key_len]) - ord('A')
+
+        if decrypt:
+            shift = 26 - shift
+
+        letter = (ord(text[i]) - ord('A') + shift) % 26
+        result += chr(letter + ord('A'))
+
+    return result
+
+
+# Example usage
+text = input("Enter Value: ")
+key = input("Enter Key: ")
+
+encrypted = vigenere_cipher(text.upper(), key.upper(), decrypt=False)
+print("Encrypted Message:", encrypted)
+
+decrypted = vigenere_cipher(encrypted, key.upper(), decrypt=True)
+print("Decrypted Message:", decrypted)
+
+```
 ## OUTPUT
+<img width="1812" height="610" alt="image" src="https://github.com/user-attachments/assets/5ef19e6c-c4e7-4954-87be-a71cedc6c7a5" />
 
 ## RESULT
