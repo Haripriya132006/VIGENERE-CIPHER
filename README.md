@@ -31,34 +31,51 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 
 ## PROGRAM
 ```
-def vigenere_cipher(text, key, decrypt=False):
-    result = ""
-    key_len = len(key)
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
 
-    for i in range(len(text)):
-        shift = ord(key[i % key_len]) - ord('A')
+int main() {
+    char text[200], key[200], out[200];
+    
+    printf("Enter UPPERCASE text: ");
+    scanf("%199s", text);
 
-        if decrypt:
-            shift = 26 - shift
+    printf("Enter UPPERCASE key: ");
+    scanf("%199s", key);
 
-        letter = (ord(text[i]) - ord('A') + shift) % 26
-        result += chr(letter + ord('A'))
+    // check uppercase
+    for (int i = 0; text[i]; i++)
+        if (!isupper(text[i])) { printf("Text must be UPPERCASE!\n"); return 0; }
 
-    return result
+    for (int i = 0; key[i]; i++)
+        if (!isupper(key[i])) { printf("Key must be UPPERCASE!\n"); return 0; }
 
+    int n = strlen(text), k = strlen(key);
 
-# Example usage
-text = input("Enter Value: ")
-key = input("Enter Key: ")
+    // Encrypt
+    for (int i = 0; i < n; i++) {
+        int shift = key[i % k] - 'A';
+        out[i] = ((text[i] - 'A') + shift) % 26 + 'A';
+    }
+    out[n] = '\0';
+    printf("Encrypted: %s\n", out);
 
-encrypted = vigenere_cipher(text.upper(), key.upper(), decrypt=False)
-print("Encrypted Message:", encrypted)
+    // Decrypt
+    for (int i = 0; i < n; i++) {
+        int shift = key[i % k] - 'A';
+        out[i] = ((out[i] - 'A') - shift + 26) % 26 + 'A';
+    }
+    out[n] = '\0';
+    printf("Decrypted: %s\n", out);
 
-decrypted = vigenere_cipher(encrypted, key.upper(), decrypt=True)
-print("Decrypted Message:", decrypted)
+    return 0;
+}
+
 
 ```
 ## OUTPUT
-<img width="1812" height="610" alt="image" src="https://github.com/user-attachments/assets/5ef19e6c-c4e7-4954-87be-a71cedc6c7a5" />
+<img width="1466" height="548" alt="image" src="https://github.com/user-attachments/assets/ad9472fd-f189-4422-901a-7818aa8e092c" />
 
 ## RESULT
+Hence the Vigenere Cipher substitution technique has been implemented successfully using C program.
